@@ -1,5 +1,10 @@
 <h1 align="center">PhishGuard ML</h1>
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/PYRAMID-SEC/phishguard-ml/main/phishguard-ml/frontend/ML.png" alt="PhishGuard ML" width="700"/>
+</p>
+
+<h1 align="center">PhishGuard ML</h1>
 <p align="center"><b>Static, privacy-conscious phishing analysis.</b><br/>
 A defensive research and educational platform that examines URLs, emails, <code>.eml</code> files, HTML, IP addresses and domains without ever touching the submitted target.</p>
 
