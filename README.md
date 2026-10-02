@@ -3,12 +3,7 @@
 <p align="center"><b>Static, privacy-conscious phishing analysis.</b><br/>
 A defensive research and educational platform that examines URLs, emails, <code>.eml</code> files, HTML, IP addresses and domains without ever touching the submitted target.</p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11-0B1426?style=for-the-badge&logo=python&logoColor=00D1FF" alt="Python 3.11"/>
-  <img src="https://img.shields.io/badge/FastAPI-Backend-0B1426?style=for-the-badge&logo=fastapi&logoColor=00D1FF" alt="FastAPI"/>
-  <img src="https://img.shields.io/badge/Next.js-Frontend-0B1426?style=for-the-badge&logo=nextdotjs&logoColor=00D1FF" alt="Next.js"/>
-  <img src="https://img.shields.io/badge/SQLite-History-0B1426?style=for-the-badge&logo=sqlite&logoColor=00D1FF" alt="SQLite"/>
-  <img src="https://img.shields.io/badge/Docker-Compose-0B1426?style=for-the-badge&logo=docker&logoColor=00D1FF" alt="Docker Compose"/>
+
 </p>
 
 <p align="center">
