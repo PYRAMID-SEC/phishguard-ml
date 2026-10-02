@@ -29,16 +29,56 @@ The defining design choice is that it is **intentionally static**. It never visi
 
 ## What it analyzes
 
-| Input | What PhishGuard ML looks at |
-|-------|------------------------------|
-| **URL** | Feature extraction with an optional Random Forest model and conservative fallback heuristics |
-| **Email message** | Header mismatch, urgency wording, financial language, attachment cues and links |
-| **`.eml` file** | The same email checks, parsed from the uploaded message file |
-| **HTML file** | Static BeautifulSoup analysis of forms, password fields, scripts, iframes and external destinations |
-| **IP address** | Local-only checks for malformed syntax and private addresses |
-| **Domain** | Local-only checks for punycode, depth and unusual TLDs |
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Fira Code, monospace','fontSize':'14px'}}}%%
+flowchart LR
+    U(["👤 Analyst"]):::user
 
-Every analyzer returns **one unified result schema**, so the dashboard and API behave the same way for every input type.
+    subgraph FE["🖥️ FRONTEND · Next.js"]
+        D["Dashboard<br/>findings · features · recommendations"]:::front
+    end
+
+    subgraph BE["⚙️ BACKEND · FastAPI"]
+        direction TB
+        API["/api/analyze/*"]:::api
+        subgraph AN["🔍 STATIC ANALYZERS"]
+            direction LR
+            A1["URL"]:::an
+            A2["Email / .eml"]:::an
+            A3["HTML"]:::an
+            A4["IP / Domain"]:::an
+        end
+        R["📦 Unified Result Schema"]:::result
+    end
+
+    subgraph MLB["🧠 ML · optional"]
+        M[("Random Forest<br/>URL model")]:::ml
+    end
+
+    DB[("🗄️ SQLite<br/>metadata + results")]:::db
+
+    U --> D --> API
+    API --> A1 & A2 & A3 & A4
+    A1 <-.->|optional| M
+    A1 & A2 & A3 & A4 --> R
+    R --> DB
+    R --> D
+
+    classDef user   fill:#1E293B,stroke:#94A3B8,stroke-width:2px,color:#F8FAFC
+    classDef front  fill:#0C4A6E,stroke:#00D1FF,stroke-width:2px,color:#FFFFFF
+    classDef api    fill:#0B1426,stroke:#00D1FF,stroke-width:2px,color:#00D1FF
+    classDef an     fill:#172554,stroke:#38BDF8,stroke-width:2px,color:#FFFFFF
+    classDef result fill:#064E3B,stroke:#34D399,stroke-width:2px,color:#FFFFFF
+    classDef ml     fill:#3B0764,stroke:#C084FC,stroke-width:2px,color:#FFFFFF
+    classDef db     fill:#422006,stroke:#FBBF24,stroke-width:2px,color:#FFFFFF
+
+    style FE  fill:#071427,stroke:#00D1FF,stroke-width:2px,color:#00D1FF
+    style BE  fill:#071427,stroke:#00D1FF,stroke-width:2px,color:#00D1FF
+    style AN  fill:#0B1B3A,stroke:#38BDF8,stroke-width:1px,stroke-dasharray:5 5,color:#38BDF8
+    style MLB fill:#1A0A2E,stroke:#C084FC,stroke-width:2px,color:#C084FC
+
+    linkStyle default stroke:#00D1FF,stroke-width:2px
+```
 
 ## Features
 
