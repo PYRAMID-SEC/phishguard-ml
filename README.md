@@ -27,7 +27,7 @@ The defining design choice is that it is **intentionally static**. It never visi
 
 > Results are **probabilistic signals, not verdicts**. A low-risk result does not prove safety, and a high-risk result does not establish malicious intent.
 
-## What it analyzes
+## Architecture
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'fontFamily':'Fira Code, monospace','fontSize':'14px'}}}%%
@@ -90,33 +90,7 @@ flowchart LR
 - **Reproducible training:** scripts for URL and email models with precision, recall, F1, ROC-AUC and a confusion matrix
 - **One-command stack:** run everything with `docker compose up`
 
-## Architecture
 
-```mermaid
-flowchart LR
-    U["Analyst"] --> F["Next.js dashboard<br/>frontend/"]
-    F -->|"/api/analyze/*"| B["FastAPI service<br/>backend/"]
-    B --> A1["URL analyzer"]
-    B --> A2["Email / .eml analyzer"]
-    B --> A3["HTML analyzer"]
-    B --> A4["IP / domain analyzer"]
-    A1 -.->|"optional"| M[("Trained models<br/>ml/")]
-    A1 --> R["Unified result schema"]
-    A2 --> R
-    A3 --> R
-    A4 --> R
-    R --> D[("SQLite<br/>metadata + results")]
-    R --> F
-```
-
-| Folder | Role |
-|--------|------|
-| `frontend/` | Next.js App Router client |
-| `backend/` | FastAPI service exposing the analysis API |
-| `ml/` | Reproducible training scripts |
-| `tests/` | Backend test suite |
-
-The frontend calls `/api/analyze/*`. The backend returns a unified result and writes metadata to SQLite.
 
 ## Quick start
 
